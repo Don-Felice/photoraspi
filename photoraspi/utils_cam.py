@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# FSegerer 20200801
+
 
 from picamera import PiCamera
 import time
@@ -44,3 +44,13 @@ def shootseries(camera, num_imgs, interval, path_output):
         time.sleep(interval)
     print(f'Awesome series captured and saved in \"{str(path_output)}\"')
     print('---------------------')
+
+
+def singleshot(camera, path_output):
+    if isinstance(path_output, str):
+        path_output = Path(path_output)
+
+    path_output.mkdir(parents=True, exist_ok=True)
+    timestamp = gettimestamp()
+    img_name = f'RasPic_{timestamp}.jpg'
+    camera.capture(str(path_output / img_name))

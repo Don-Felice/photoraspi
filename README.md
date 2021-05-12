@@ -1,3 +1,3 @@
 # photoraspi
 
-Time lapse and photography using the raspberry pi.
+Photography tools using the raspberry pi.
