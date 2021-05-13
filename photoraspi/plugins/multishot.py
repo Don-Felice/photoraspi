@@ -23,12 +23,15 @@ class MultiShot:
                             help="destination directory for image output")
         parser.add_argument("-a", "--alpha", type=int, default=60,
                             help="transparency of preview mode")
+        parser.add_argument("-q", "--quick", action='store_true', default=False,
+                            help="Skip camera adjustment before shot.")
 
     @staticmethod
     def run(args):
         camera = PiCamera()
-        print("Take your time to adjust the camera, you don't wanna mess this up!!")
-        livetime(camera, alpha=args.alpha)
+        if not args.quick:
+            print("Take your time to adjust the camera, you don't wanna mess this up!!")
+            livetime(camera, alpha=args.alpha)
         shootseries(camera, args.num_imgs, args.interval, args.dest_dir)
 
 
