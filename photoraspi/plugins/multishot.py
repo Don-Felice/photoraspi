@@ -3,18 +3,21 @@
 
 # external imports
 from picamera import PiCamera
-import argparse
 
 # project intern imports
 from photoraspi.utils_cam import livetime, shootseries
 
 
 class MultiShot:
-    """ Take multiple pictures in a given interval
+    """
+    Take multiple pictures in a given interval
     """
 
     @staticmethod
     def init_parser(parser):
+        """
+        Adding arguments to an argparse parser. Needed for all photoraspi_plugins.
+        """
         parser.add_argument("num_imgs", type=int,
                             help="number of images to be taken")
         parser.add_argument("interval", type=int,
@@ -26,12 +29,14 @@ class MultiShot:
         parser.add_argument("-q", "--quick", action='store_true', default=False,
                             help="Skip camera adjustment before shot.")
 
-    @staticmethod
-    def run(args):
+    def __init__(self, args):
+        self.camera = PiCamera()
+        for arg in vars(args):
+            setattr(self, arg, getattr(args, arg))
+
+    def run(self):
         camera = PiCamera()
-        if not args.quick:
+        if not self.quick:
             print("Take your time to adjust the camera, you don't wanna mess this up!!")
-            livetime(camera, alpha=args.alpha)
-        shootseries(camera, args.num_imgs, args.interval, args.dest_dir)
-
-
+            livetime(camera, alpha=self.alpha)
+        shootseries(self.camera, self.num_imgs, self.interval, self.dest_dir)
