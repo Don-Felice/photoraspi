@@ -6,9 +6,10 @@ from picamera import PiCamera
 
 # project intern imports
 from photoraspi.utils_cam import livetime, shootseries
+from photoraspi.photoraspi_plugin import PhotoraspiPlugin
 
 
-class MultiShot:
+class MultiShot(PhotoraspiPlugin):
     """
     Take multiple pictures in a given interval
     """
@@ -31,8 +32,7 @@ class MultiShot:
 
     def __init__(self, args):
         self.camera = PiCamera()
-        for arg in vars(args):
-            setattr(self, arg, getattr(args, arg))
+        super().__init__(args)
 
     def run(self):
         camera = PiCamera()

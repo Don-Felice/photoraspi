@@ -4,12 +4,12 @@
 # external imports
 from picamera import PiCamera
 
-
 # project intern imports
 from photoraspi.utils_cam import livetime, singleshot
+from photoraspi.photoraspi_plugin import PhotoraspiPlugin
 
 
-class Shot:
+class Shot(PhotoraspiPlugin):
     """
     Take a single picture
     """
@@ -28,8 +28,7 @@ class Shot:
 
     def __init__(self, args):
         self.camera = PiCamera()
-        for arg in vars(args):
-            setattr(self, arg, getattr(args, arg))
+        super().__init__(args)
 
     def run(self):
         if not self.quick:

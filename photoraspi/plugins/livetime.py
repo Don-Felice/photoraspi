@@ -6,9 +6,10 @@ from picamera import PiCamera
 
 # project intern imports
 from photoraspi.utils_cam import livetime
+from photoraspi.photoraspi_plugin import PhotoraspiPlugin
 
 
-class LiveTime:
+class LiveTime(PhotoraspiPlugin):
     """
     Live stream to display
     """
@@ -23,8 +24,7 @@ class LiveTime:
 
     def __init__(self, args):
         self.camera = PiCamera()
-        for arg in vars(args):
-            setattr(self, arg, getattr(args, arg))
+        super().__init__(args)
 
     def run(self):
         print("Take your time to adjust the camera, you don't wanna mess this up!!")
